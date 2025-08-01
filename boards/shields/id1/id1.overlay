@@ -162,7 +162,7 @@
         compatible = "worldsemi,ws2812-gpio";
         label = "LED_STRIP_NUMPAD";
         
-        gpios = <&xiao_d 10 0>;
+        in-gpios = <&xiao_d 10 0>;
         chain-length = <18>; 
         
         color-mapping = <LED_COLOR_ID_GREEN LED_COLOR_ID_RED LED_COLOR_ID_BLUE>;

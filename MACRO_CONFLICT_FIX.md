@@ -55,7 +55,16 @@ error: macro "RC" passed 2 arguments, but takes just 1
 + gpios = <&xiao_d 10 0>;                                         // Valid pin
 ```
 
-### 5. Verified keymap includes
+### 5. Fixed LED strip GPIO property name
+
+**File**: `boards/shields/id1/id1.overlay`
+
+```diff
+- gpios = <&xiao_d 10 0>;                     // Wrong property for ws2812-gpio
++ in-gpios = <&xiao_d 10 0>;                  // Correct property name
+```
+
+### 6. Verified keymap includes
 
 **File**: `boards/shields/id1/id1.keymap` (already correct)
 
@@ -86,6 +95,7 @@ west build -p -b seeeduino_xiao_ble -- -DSHIELD=id1
 | `id1.overlay` | Used `RC(row,col)` syntax in matrix transform | Changed to `row col` format      |
 | `id1.overlay` | Missing LED bindings for color constants      | Added led/led.h include          |
 | `id1.overlay` | Invalid GPIO pins (29, 28, 15) out of range   | Changed to valid pins (2, 4, 10) |
+| `id1.overlay` | Wrong GPIO property name for ws2812-gpio      | Changed `gpios` to `in-gpios`    |
 | `id1.keymap`  | Needed keys.h for keycodes                    | Already correct                  |
 
 ## Expected Result
