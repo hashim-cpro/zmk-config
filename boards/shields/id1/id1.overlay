@@ -5,6 +5,7 @@
 // - Encoder: Rotary encoder with switch
 
 #include <dt-bindings/zmk/matrix_transform.h>
+#include <dt-bindings/led/led.h>
 
 #include "id1-layouts.dtsi"
 

@@ -33,7 +33,16 @@ error: macro "RC" passed 2 arguments, but takes just 1
 + 0 0  0 1  0 2 ...           // NEW - proper matrix coordinates
 ```
 
-### 3. Verified keymap includes
+### 3. Added missing LED bindings include
+
+**File**: `boards/shields/id1/id1.overlay`
+
+```diff
+  #include <dt-bindings/zmk/matrix_transform.h>
++ #include <dt-bindings/led/led.h>     // ADDED - for LED_COLOR_ID constants
+```
+
+### 4. Verified keymap includes
 
 **File**: `boards/shields/id1/id1.keymap` (already correct)
 
@@ -62,6 +71,7 @@ west build -p -b seeeduino_xiao_ble -- -DSHIELD=id1
 | ------------- | --------------------------------------------- | --------------------------- |
 | `id1.overlay` | Included `keys.h` causing RC macro conflict   | Removed keys.h include      |
 | `id1.overlay` | Used `RC(row,col)` syntax in matrix transform | Changed to `row col` format |
+| `id1.overlay` | Missing LED bindings for color constants      | Added led/led.h include     |
 | `id1.keymap`  | Needed keys.h for keycodes                    | Already correct             |
 
 ## Expected Result
