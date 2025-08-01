@@ -42,7 +42,20 @@ error: macro "RC" passed 2 arguments, but takes just 1
 + #include <dt-bindings/led/led.h>     // ADDED - for LED_COLOR_ID constants
 ```
 
-### 4. Verified keymap includes
+### 4. Fixed invalid GPIO references
+
+**File**: `boards/shields/id1/id1.overlay`
+
+```diff
+- a-gpios = <&xiao_d 3 (...)>; b-gpios = <&xiao_d 29 (...)>;     // 29 doesn't exist
++ a-gpios = <&xiao_d 3 (...)>; b-gpios = <&xiao_d 2 (...)>;      // Valid pins D0-D10
+- input-gpios = <&xiao_d 28 (...)>;                              // 28 doesn't exist
++ input-gpios = <&xiao_d 4 (...)>;                               // Valid pin
+- gpios = <&xiao_d 15 0>;                                         // 15 doesn't exist
++ gpios = <&xiao_d 10 0>;                                         // Valid pin
+```
+
+### 5. Verified keymap includes
 
 **File**: `boards/shields/id1/id1.keymap` (already correct)
 
@@ -67,12 +80,13 @@ west build -p -b seeeduino_xiao_ble -- -DSHIELD=id1
 
 ## What Was Fixed
 
-| File          | Issue                                         | Fix                         |
-| ------------- | --------------------------------------------- | --------------------------- |
-| `id1.overlay` | Included `keys.h` causing RC macro conflict   | Removed keys.h include      |
-| `id1.overlay` | Used `RC(row,col)` syntax in matrix transform | Changed to `row col` format |
-| `id1.overlay` | Missing LED bindings for color constants      | Added led/led.h include     |
-| `id1.keymap`  | Needed keys.h for keycodes                    | Already correct             |
+| File          | Issue                                         | Fix                              |
+| ------------- | --------------------------------------------- | -------------------------------- |
+| `id1.overlay` | Included `keys.h` causing RC macro conflict   | Removed keys.h include           |
+| `id1.overlay` | Used `RC(row,col)` syntax in matrix transform | Changed to `row col` format      |
+| `id1.overlay` | Missing LED bindings for color constants      | Added led/led.h include          |
+| `id1.overlay` | Invalid GPIO pins (29, 28, 15) out of range   | Changed to valid pins (2, 4, 10) |
+| `id1.keymap`  | Needed keys.h for keycodes                    | Already correct                  |
 
 ## Expected Result
 
